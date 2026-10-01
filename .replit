@@ -1,0 +1,102 @@
+modules = ["nodejs-24", "python-base-3.13", "postgresql-16"]
+[nix]
+channel = "stable-25_05"
+packages = ["unzip"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "test"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "build"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "server-lint"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "sh -c 'node server/src/index.js & exec npm run dev'"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "test"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm test"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "build"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run build"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[workflows.workflow]]
+name = "server-lint"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx eslint server/src/seeds/historicalOrderSeed.js server/src/middleware/engagementOrderReadiness.js server/src/routes/create-engagement-order.js server/src/routes/users.js server/src/routes/admin.js server/src/cron.js server/src/index.js server/test/historicalOrderSeed.integration.test.js"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 5001
+externalPort = 3001
+
+[deployment]
+deploymentTarget = "vm"
+run = ["node", "server/src/index.js"]
+build = ["npm", "run", "build"]
+
+[userenv]
+
+[userenv.production]
+NODE_ENV = "production"
+
+[userenv.shared]
+PUBLIC_APP_URL = "https://extipspanel.com"
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 180000

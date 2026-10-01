@@ -1,0 +1,34 @@
+---
+name: Organic delivery policy
+description: Product rules for random schedules and real provider dispatch.
+---
+
+Apply organic quantity and timing randomization only when creating new orders. Do not rewrite already-scheduled runs. Every item schedule must still sum to its exact ordered quantity and respect provider minimums.
+
+**Why:** The user explicitly chose future orders only and requires natural delivery without changing purchased totals.
+
+**How to apply:** Generate and validate randomized quantities and gaps before saving a new schedule; never alter quantities inside the dispatch cron.
+
+Provider minimums apply to the quantity sent to the provider after an account's delivery multiplier is applied. New schedules must use the largest active multiplier for the selected service, while dispatch must reject undersized provider requests before making an API call. If an older tail cannot meet that floor, move it atomically into a pending sibling or hold it without consuming retries.
+
+**Why:** A customer-facing scheduled quantity can become an undersized provider request after multiplier conversion. Retrying the provider's deterministic minimum error exhausts a valid order's retry budget and may make it appear failed.
+
+**How to apply:** Keep the selected bundle service attached throughout validation and schedule generation, preserve the exact total when moving a tail, and give transient failures or a compatible-but-busy provider precedence over minimum-only handling.
+
+If an active provider account or service mapping is unavailable, keep the run pending with a visible configuration error. Never create a simulated provider ID or mark a run completed without a real provider response.
+
+**Why:** Simulated completions were shown as delivered even though no provider request occurred, which is unacceptable for paid orders.
+
+**How to apply:** Treat provider configuration as a prerequisite for dispatch and recover any known simulated runs back to the real dispatch queue.
+
+Provider accounts, API credentials, and service mappings are managed through the app's Admin Panel and are the source of truth for dispatch. Do not require a separate provider integration or JSON configuration.
+
+**Why:** The user maintains the complete provider setup in Admin Panel and expects orders to use those linked accounts directly.
+
+**How to apply:** Preserve Admin Panel credentials during idempotent seeds, pre-create missing account/mapping slots without overwriting keys, and dispatch through `service_provider_mapping` to the linked active account.
+
+Restored historical runs whose parent order number is below 3800 are display-only records. Never dispatch, poll, recover, reset, or requeue them.
+
+**Why:** The full Extips history includes unfinished legacy runs; processing them again would resend old orders and could create duplicate provider charges.
+
+**How to apply:** Every background cron path that mutates run state must join through the engagement item to its parent order and require order number 3800 or newer.
