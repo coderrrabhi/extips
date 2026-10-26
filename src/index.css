@@ -493,3 +493,67 @@ body input, body textarea, body select { color: hsl(224 64% 12%) !important; }
 .wallet-sky-theme .wallet-on-gradient .wallet-soft-white {
   color: #e0f2fe !important;
 }
+
+/* ── Extips dark footer + on-tint surfaces (scoped; beats global text-white remap) ── */
+body .ex-ontint, body .ex-ontint * { color: #ffffff !important; }
+body footer.ex-footer [class*="text-white"], body footer.ex-footer h3, body footer.ex-footer h4 { color: #ffffff !important; }
+body footer.ex-footer [class*="text-slate-300"] { color: #cbd5e1 !important; }
+body footer.ex-footer [class*="text-slate-400"] { color: #94a3b8 !important; }
+body footer.ex-footer [class*="text-slate-500"] { color: #64748b !important; }
+body footer.ex-footer [class*="bg-white"] { background-color: rgba(255,255,255,0.05) !important; }
+body footer.ex-footer [class*="border-white"] { border-color: rgba(255,255,255,0.12) !important; }
+body footer.ex-footer a:hover, body footer.ex-footer button:hover { color: #ffffff !important; }
+
+/* Small refinement of the existing landing graph; no page theme changes. */
+:root { --ex-chart-grid: oklch(.88 .04 235 / .55); --ex-chart-bar: oklch(.78 .1 245); --ex-chart-emphasis: oklch(.55 .2 260); }
+.ex-growth-chart { display:flex; align-items:flex-end; gap:4px; height:56px; margin-top:8px; padding:3px 0 0; border-bottom:1px solid var(--ex-chart-grid); background:repeating-linear-gradient(to top,var(--ex-chart-grid) 0 1px,transparent 1px 18px); }
+.ex-growth-bar { flex:1; min-width:0; border-radius:3px 3px 0 0; background:var(--ex-chart-bar); transition:height 1200ms ease-in-out; }
+.ex-growth-bar-emphasis { background:var(--ex-chart-emphasis); }
+@media(prefers-reduced-motion:reduce){.ex-growth-bar{transition:none}}
+
+/* Scoped engagement preview: original public palette and all other pages unchanged. */
+.ex-growth-chart-console {
+  --ex-preview-surface: hsl(var(--card));
+  --ex-preview-ink: hsl(var(--foreground));
+  --ex-preview-muted: hsl(var(--muted-foreground));
+  --ex-preview-blue: hsl(var(--primary));
+  --ex-preview-tint: hsl(var(--secondary));
+  --ex-preview-border: hsl(var(--border));
+  --ex-preview-success: hsl(var(--success));
+  --ex-preview-shadow: 0 24px 64px hsl(var(--foreground) / .10);
+  position:relative; min-width:0; background:var(--ex-preview-surface); color:var(--ex-preview-ink); border:1px solid var(--ex-preview-border); border-radius:16px; padding:24px; box-shadow:var(--ex-preview-shadow); font-size:13px; letter-spacing:0;
+}
+.ex-growth-chart-heading,.ex-growth-chart-summary,.ex-growth-chart-bottom { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.ex-growth-chart-brand { display:flex; align-items:center; gap:8px; font-weight:700; }
+.ex-growth-chart-brand svg { color:var(--ex-preview-blue); flex-shrink:0; }
+.ex-growth-chart-sample { color:var(--ex-preview-muted); font-size:11px; white-space:nowrap; }
+.ex-growth-chart-link { display:flex; align-items:center; gap:10px; margin-top:22px; padding:13px 12px; background:var(--ex-preview-tint); border:1px solid var(--ex-preview-border); border-radius:8px; color:var(--ex-preview-muted); }
+.ex-growth-chart-link span { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-family:'JetBrains Mono',monospace; font-size:11px; }
+.ex-growth-chart-link svg { color:var(--ex-preview-blue); flex-shrink:0; }
+.ex-growth-chart-routing { display:flex; align-items:center; justify-content:center; gap:8px; height:28px; color:var(--ex-preview-blue); }
+.ex-growth-chart-routing span { width:28px; height:1px; background:var(--ex-preview-border); }
+.ex-growth-chart-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+body .ex-growth-chart-tab { border:1px solid var(--ex-preview-border); border-radius:8px; padding:0 8px; height:44px; color:var(--ex-preview-muted); font-size:12px; box-shadow:none; background:var(--ex-preview-surface); }
+body .ex-growth-chart-tab:hover,body .ex-growth-chart-selected { background:var(--ex-preview-tint); border-color:var(--ex-preview-blue); color:var(--ex-preview-blue); }
+.ex-growth-chart-summary { margin:24px 0 18px; align-items:flex-end; }
+.ex-growth-chart-label { display:block; color:var(--ex-preview-muted); font-size:12px; }
+.ex-growth-chart-summary strong { display:block; font-size:30px; line-height:1.3; margin-top:3px; font-weight:750; font-variant-numeric:tabular-nums; }
+.ex-growth-chart-summary small { font-size:12px; font-weight:400; color:var(--ex-preview-muted); }
+.ex-growth-chart-period { font-size:11px; color:var(--ex-preview-muted); padding-bottom:6px; }
+.ex-growth-chart-plot { display:flex; gap:10px; height:144px; }
+.ex-growth-chart-axis { display:flex; flex-direction:column; justify-content:space-between; width:32px; padding:8px 0; flex-shrink:0; color:var(--ex-preview-muted); font-size:10px; }
+.ex-growth-chart-plot svg { flex:1; width:0; min-width:0; height:144px; overflow:visible; }
+.ex-growth-chart-gridline { stroke:var(--ex-preview-border); stroke-dasharray:3 5; }
+.ex-growth-chart-line { fill:none; stroke:var(--ex-preview-blue); stroke-width:3; stroke-linecap:round; vector-effect:non-scaling-stroke; animation:ex-growth-chart-reveal 700ms ease-out; }
+.ex-growth-chart-fill-top { stop-color:var(--ex-preview-blue); stop-opacity:.18; }
+.ex-growth-chart-fill-bottom { stop-color:var(--ex-preview-blue); stop-opacity:.015; }
+.ex-growth-chart-hours { display:flex; justify-content:space-between; padding-left:42px; margin-top:8px; color:var(--ex-preview-muted); font-size:10px; }
+.ex-growth-chart-stages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; border-top:1px solid var(--ex-preview-border); margin-top:20px; padding-top:17px; }
+.ex-growth-chart-stages span { display:flex; align-items:center; gap:5px; font-size:11px; white-space:nowrap; }
+.ex-growth-chart-stages svg { color:var(--ex-preview-success); flex-shrink:0; }
+.ex-growth-chart-bottom { border-top:1px solid var(--ex-preview-border); margin-top:17px; padding-top:14px; color:var(--ex-preview-muted); font-size:10px; }
+.ex-growth-chart-bottom span { display:flex; align-items:center; gap:5px; }
+.ex-growth-chart-bottom svg { color:var(--ex-preview-blue); flex-shrink:0; }
+@keyframes ex-growth-chart-reveal { from { opacity:.3; } to { opacity:1; } }
+@media(max-width:420px) { .ex-growth-chart-console { padding:16px; } .ex-growth-chart-brand { font-size:12px; } .ex-growth-chart-stages { gap:4px; } .ex-growth-chart-stages span { font-size:10px; } .ex-growth-chart-bottom { gap:8px; } }
+@media(prefers-reduced-motion:reduce) { .ex-growth-chart-line { animation:none; } }

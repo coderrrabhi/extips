@@ -7,6 +7,10 @@ import {
 import { PageMeta } from '@/components/seo/PageMeta';
 import logo from '@/assets/logo.jpg';
 import { useAuth } from '@/hooks/useAuth';
+import { SiteFooter } from '@/components/layout/SiteFooter';
+import { FloatingSupportWidget } from '@/components/layout/FloatingSupportWidget';
+import { LandingHeader, LandingHero } from '@/components/landing/LandingHero';
+import { HowItWorks, FaqSection, ServiceMarquee } from '@/components/landing/LandingExtras';
 
 /**
  * Extips Panel Pro — Light Sky Blue v3.0 landing.
@@ -36,111 +40,12 @@ const Index = () => {
           style={{ background: 'radial-gradient(ellipse, rgba(96,165,250,0.15) 0%, transparent 70%)' }} />
       </div>
 
-      {/* Nav */}
-      <header className="sticky top-0 z-40 backdrop-blur-md border-b"
-        style={{ background: 'rgba(224,242,254,0.75)', borderColor: '#bae6fd' }}>
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src={logo} alt="Extips Panel Pro" width={32} height={32} fetchPriority="high" decoding="async"
-              className="h-8 w-8 rounded-md object-cover ring-1 ring-blue-300" />
-            <span className="text-[15px] font-semibold tracking-tight text-slate-800">Extips Panel Pro</span>
-            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.18em] ml-2 px-1.5 py-0.5 rounded border font-semibold"
-              style={{ color: '#2563eb', borderColor: '#93c5fd', background: '#eff6ff' }}>v3</span>
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-8 text-sm text-slate-500">
-            <a href="#features" className="hover:text-slate-800 transition-colors">Features</a>
-            <a href="#platforms" className="hover:text-slate-800 transition-colors">Platforms</a>
-            <Link to="/support" className="hover:text-slate-800 transition-colors">Support</Link>
-          </nav>
-
-          <div className="flex items-center gap-2.5">
-            <Link to="/auth"
-              className="hidden sm:inline-flex text-sm text-slate-500 hover:text-slate-800 px-3 py-2 rounded-lg transition-colors">
-              Sign in
-            </Link>
-            <Link to="/auth"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg text-white transition-all active:scale-[0.98]"
-              style={{ background: 'linear-gradient(135deg,#2563eb,#0ea5e9)', boxShadow: '0 6px 20px rgba(37,99,235,0.30)' }}>
-              Get started <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
-        </div>
-      </header>
+      <LandingHeader />
 
       <main>
-        {/* Hero */}
-        <section className="relative">
-          <div className="max-w-5xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28 pb-20 sm:pb-28 text-center">
+        <LandingHero />
 
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-8"
-              style={{ borderColor: '#93c5fd', background: '#eff6ff' }}>
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping"
-                  style={{ background: '#3b82f6' }} />
-                <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: '#2563eb' }} />
-              </span>
-              <span className="text-[11px] font-semibold tracking-[0.18em] uppercase" style={{ color: '#2563eb' }}>
-                Extips Panel Pro · Software v3.0
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-5xl sm:text-7xl lg:text-[88px] font-extrabold tracking-tight leading-[1.02] mb-6 text-slate-900"
-              style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-              The Growth Engine
-              <br />
-              for Social{' '}
-              <span className="italic font-bold"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif", color: '#2563eb' }}>
-                Magic
-              </span>
-            </h1>
-
-            {/* Sub */}
-            <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Master Instagram, TikTok, and YouTube organic engagement through a
-              precision-engineered platform. No bots — just high-performance
-              software with multi-provider failover, wallet, and a live dashboard.
-            </p>
-
-            {/* CTA */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <Link to="/auth"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 font-semibold rounded-xl text-white transition-all active:scale-[0.98]"
-                style={{ background: 'linear-gradient(135deg,#2563eb,#0ea5e9)', boxShadow: '0 10px 28px rgba(37,99,235,0.28)' }}>
-                Launch Dashboard <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link to="/wallet"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 font-semibold rounded-xl text-slate-700 border transition-all hover:border-blue-300"
-                style={{ background: 'rgba(255,255,255,0.7)', borderColor: '#93c5fd', backdropFilter: 'blur(8px)' }}>
-                Add funds
-              </Link>
-            </div>
-
-            {/* Platforms strip */}
-            <div className="mt-20 pt-8" style={{ borderTop: '1px solid #bae6fd' }}>
-              <p className="text-[10px] tracking-[0.24em] uppercase text-slate-400 mb-5">
-                Built for the platforms that matter
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-slate-400">
-                {[
-                  { Icon: Instagram, label: 'INSTAGRAM' },
-                  { Icon: Sparkles, label: 'TIKTOK' },
-                  { Icon: Youtube, label: 'YOUTUBE' },
-                  { Icon: MessageCircle, label: 'TELEGRAM' },
-                  { Icon: Globe, label: 'FACEBOOK' },
-                ].map(({ Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2 hover:text-slate-600 transition-colors">
-                    <Icon className="h-4 w-4" />
-                    <span className="text-xs font-semibold tracking-[0.18em]">{label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <ServiceMarquee />
 
         {/* Features */}
         <section id="features" className="relative py-24 sm:py-32" style={{ borderTop: '1px solid #bae6fd' }}>
@@ -279,6 +184,9 @@ const Index = () => {
           </div>
         </section>
 
+        <HowItWorks />
+        <FaqSection />
+
         {/* CTA band */}
         <section className="relative py-24" style={{ borderTop: '1px solid #bae6fd' }}>
           <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
@@ -300,20 +208,8 @@ const Index = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="py-10" style={{ borderTop: '1px solid #bae6fd' }}>
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-          <div className="flex items-center gap-2.5">
-            <img src={logo} alt="Extips Panel Pro" className="h-6 w-6 rounded object-cover" />
-            <span>© {new Date().getFullYear()} Extips Panel Pro · v3.0</span>
-          </div>
-          <div className="flex items-center gap-6">
-            <Link to="/legal/terms" className="hover:text-slate-800 transition-colors">Terms</Link>
-            <Link to="/legal/privacy" className="hover:text-slate-800 transition-colors">Privacy</Link>
-            <Link to="/support" className="hover:text-slate-800 transition-colors">Support</Link>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
+      <FloatingSupportWidget />
     </div>
   );
 };

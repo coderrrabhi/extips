@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { CurrencyProvider } from "@/hooks/useCurrency";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { PublicShell } from "@/components/layout/PublicShell";
 import { toast } from "sonner";
 import { AppErrorBoundary } from "@/components/app/AppErrorBoundary";
 
@@ -173,13 +174,15 @@ const App = () => {
                       <Route path="/admin/webhook-events" element={<AdminGuard><AdminWebhookEvents /></AdminGuard>} />
 
                       {/* Legal */}
-                      <Route path="/terms" element={<TermsOfService />} />
-                      <Route path="/privacy" element={<PrivacyPolicy />} />
-                      <Route path="/refund" element={<RefundPolicy />} />
-                      <Route path="/cookies" element={<CookiePolicy />} />
-                      <Route path="/contact" element={<ContactUs />} />
-                      <Route path="/about" element={<AboutUs />} />
-                      <Route path="/shipping" element={<ShippingPolicy />} />
+                      <Route path="/legal/terms" element={<Navigate to="/terms" replace />} />
+                      <Route path="/legal/privacy" element={<Navigate to="/privacy" replace />} />
+                      <Route path="/terms" element={<PublicShell><TermsOfService /></PublicShell>} />
+                      <Route path="/privacy" element={<PublicShell><PrivacyPolicy /></PublicShell>} />
+                      <Route path="/refund" element={<PublicShell><RefundPolicy /></PublicShell>} />
+                      <Route path="/cookies" element={<PublicShell><CookiePolicy /></PublicShell>} />
+                      <Route path="/contact" element={<PublicShell><ContactUs /></PublicShell>} />
+                      <Route path="/about" element={<PublicShell><AboutUs /></PublicShell>} />
+                      <Route path="/shipping" element={<PublicShell><ShippingPolicy /></PublicShell>} />
                     </Routes>
                   </Suspense>
                 </MaintenanceGuard>
