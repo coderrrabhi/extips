@@ -14,8 +14,8 @@ export function FloatingSupportWidget() {
   ];
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
-      <div className={`origin-bottom-right transition-all duration-300 ${open ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-3 pointer-events-none'}`}>
+    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 pointer-events-none">
+      <div className={`origin-bottom-right transition-all duration-300 ${open ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-95 translate-y-3 pointer-events-none invisible h-0 overflow-hidden'}`}>
         <div className="w-[290px] rounded-3xl overflow-hidden border shadow-2xl"
           style={{ background: 'rgba(255,255,255,0.96)', borderColor: '#bae6fd', backdropFilter: 'blur(14px)', boxShadow: '0 24px 60px rgba(15,40,90,0.25)' }}>
           <div className="ex-ontint px-5 py-4 text-white" style={{ background: 'linear-gradient(135deg,#1d4ed8,#0ea5e9)' }}>
@@ -54,7 +54,7 @@ export function FloatingSupportWidget() {
       </div>
 
       <button type="button" onClick={() => setOpen((v) => !v)} aria-label={open ? 'Close support' : 'Open support'} aria-expanded={open}
-        className="ex-ontint relative h-14 w-14 rounded-full text-white flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
+        className="ex-ontint pointer-events-auto relative h-14 w-14 rounded-full text-white flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
         style={{ background: 'linear-gradient(135deg,#2563eb,#0ea5e9)', boxShadow: '0 14px 34px rgba(37,99,235,0.45)' }}>
         {!open && <span className="absolute inset-0 rounded-full animate-ping opacity-25" style={{ background: '#38bdf8' }} />}
         {open ? <X className="h-6 w-6 relative" /> : <MessageCircle className="h-6 w-6 relative" />}
